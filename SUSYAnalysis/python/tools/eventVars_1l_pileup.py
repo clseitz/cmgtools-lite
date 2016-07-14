@@ -6,6 +6,7 @@ import itertools
 import PhysicsTools.Heppy.loadlibs
 import array
 import operator
+import math
 
 # mc to data pu weight
 def getPUdict(fname, puHistName = "puRatio"):
@@ -41,9 +42,18 @@ puFileName_norm = "../python/tools/pileup/pu_ratio_70mb.root"
 puFileName_down = "../python/tools/pileup/pu_ratio_66mb.root"
 '''
 
+'''
+#2015 final
 puFileName_up = "../python/tools/pileup/pu_ratio_72p45mb.root"
 puFileName_norm = "../python/tools/pileup/pu_ratio_69mb.root"
 puFileName_down = "../python/tools/pileup/pu_ratio_65p55mb.root"
+'''
+
+#2016 4/fb
+puFileName_up   = "$CMSSW_BASE/src/CMGTools/TTHAnalysis/python/plotter/susy-1lep/pileup/pufiles/pu_ratio_4fb_Run2016B_74.9mb.root"
+puFileName_norm = "$CMSSW_BASE/src/CMGTools/TTHAnalysis/python/plotter/susy-1lep/pileup/pufiles/pu_ratio_4fb_Run2016B_71.3mb.root"
+puFileName_down = "$CMSSW_BASE/src/CMGTools/TTHAnalysis/python/plotter/susy-1lep/pileup/pufiles/pu_ratio_4fb_Run2016B_67.7mb.root"
+
 
 puNorm =  getPUdict(puFileName_norm)
 puUp =  getPUdict(puFileName_up)
@@ -51,7 +61,7 @@ puDown =  getPUdict(puFileName_down)
 
 print 80*"#"
 print "Loaded PU weights!"
-#print puNorm
+print puNorm
 
 class EventVars1L_pileup:
     def __init__(self):
@@ -75,10 +85,12 @@ class EventVars1L_pileup:
             nTrueInt = event.nTrueInt
             ret['nTrueInt'] = nTrueInt
 
-            if nTrueInt in puNorm:
-                ret['puRatio'] = puNorm[nTrueInt]
-                ret['puRatio_up'] = puUp[nTrueInt]
-                ret['puRatio_down'] = puDown[nTrueInt]
+            floornTrueInt = math.floor(nTrueInt)
+
+            if floornTrueInt in puNorm:
+                ret['puRatio'] = puNorm[floornTrueInt]
+                ret['puRatio_up'] = puUp[floornTrueInt]
+                ret['puRatio_down'] = puDown[floornTrueInt]
             else:
                 ret['puRatio'] = 0
                 ret['puRatio_up'] = 0
