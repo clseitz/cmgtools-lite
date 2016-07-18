@@ -19,4 +19,3 @@ triggLT: LT > 250
 
 nbjets >= 1: nBJet >= 1
 njets >=6: nJets30Clean >= 6
-
