@@ -5,7 +5,7 @@ import makeYieldPlots as yp
 yp._batchMode = False
 yp._alpha = 0.8
 
-lum = "4.0"
+lum = "7.7"
 yp.CMS_lumi.lumi_13TeV = lum +  " fb^{-1}"
 yp.CMS_lumi.extraText = "Preliminary"
 
@@ -128,7 +128,7 @@ if __name__ == "__main__":
     exts = [".pdf",".png",".root"]
     #exts = [".pdf"]
 
-    odir = "BinPlots/Data/JECv7/NJ4to5/allSF_noPU/"
+    odir = "BinPlots/Jul19/4to5"
     if not os.path.isdir(odir): os.makedirs(odir)
 
     for canv in canvs:

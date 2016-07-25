@@ -37,6 +37,12 @@ def printLatexHeader(nCol, f, sideways = 0):
         f.write('\\caption{Input values for limit calculation. The 3 regions with data counts are given, as well as the QCD estimate for the control regions in the side and mainband and $\kappa$ derived from simulation. The last two columns represent pseudo data based based on the epxected data prediction or MC simulation.} \n')
         f.write('\\begin{center} \n')
 
+    elif sideways == 5:
+        f.write('\\begin{table}[ht] \n ')
+        f.write('\\tiny \n')
+        f.write('\\caption{Rcs values for the [4,5] jet SB and [6,8] and >=9 jet MB regions. The last column shows the ratio of the SB vs MB denoted as $\kappa$. For this top pt reweighting, pu-reweighting, b-taggin SF, and trigger efficiencys are applied.} \n')
+        f.write('\\begin{center} \n')
+
     elif type(sideways) == str:
         f.write('\\begin{table}[ht] \n ')
         f.write('\\tiny \n')
@@ -88,7 +94,7 @@ if __name__ == "__main__":
     ydsFew9 = YieldStore("lepYields")
 
 #    a = "YieldsJune12/lumi2p571/"
-    a = "YieldsJune29/lumi3p99/grid/"
+    a = "YieldsJul19/lumi7p7/*/"
     b = a + 'merged/LT'
     btagMethod = ""
     pattern = b+"*NJ6*"
@@ -194,11 +200,11 @@ if __name__ == "__main__":
     samps = [('data_QCDsubtr','SR_SB'),('data_QCDsubtr','CR_SB'),('data_QCDsubtr','Rcs_SB'),('EWK','Kappa'),('data_QCDsubtr','CR_MB'),
             ('data_QCDsubtr','SR_MB_predict'), ('data','SR_MB')]
     label = 'SB, MB, and predictions for 0.8 fb$^{-1}$ for $n_{jet}$ 6,8 '
-    printSamps = ['data 45j, SR','data 4j5, CR','data 4j5, Rcs$^{EWK}$','$\\kappa^{EWK}$, MC','data 68j, CR', 'data 68j, pred (val $\pm$ stat $\pm$ syst)', 'data 68j, SR']
+    printSamps = ['data 45j, SR','(data-QCD) 4j5, CR','data 4j5, Rcs$^{EWK}$','$\\kappa^{EWK}$, MC','(data-QCD) 68j, CR', 'data 68j, pred (val $\pm$ stat $\pm$ syst)', 'data 68j, SR']
 
     yds6.printLatexTable(samps, printSamps, label,f, True) 
     label = 'SB, MB, and predictions for 0.8 fb$^{-1}$ for njet $\\geq 9$'
-    printSamps = ['data 45j, SR','data 4j5, CR','data 4j5, Rcs$^{EWK}$','$\\kappa^{EWK}$, MC','data 9ij, CR', 'data 9ij, pred (val $\pm$ stat $\pm$ syst)', 'data 9ij, SR']
+    printSamps = ['data 45j, SR','(data-QCD) 4j5, CR','data 4j5, Rcs$^{EWK}$','$\\kappa^{EWK}$, MC','(data-QCD) 9ij, CR', 'data 9ij, pred (val $\pm$ stat $\pm$ syst)', 'data 9ij, SR']
     yds9.printLatexTable(samps, printSamps, label, f, True)
     printLatexFooter(f, 3)
     f.close()
@@ -227,7 +233,7 @@ if __name__ == "__main__":
 
     printSamps = ['$R_{CS}$ [6,8] jets','$R_{CS}$ [4,5] jets','$\kappa$']#, '(Data-QCD) $R_{CS}$ [4,5] jets']
     samps = [('EWK','Rcs_MB'),('EWK','Rcs_SB'),('EWK','Kappa')]#,('data_QCDsubtr','Rcs_SB')]
-    printLatexHeader(len(samps), f)
+    printLatexHeader(len(samps), f, 5)
     yds6.printLatexTable(samps, printSamps, label,f) 
     printSamps = ['$R_{CS}$ $\geq$ 9 jets','$R_{CS}$ [4,5] jets','$\kappa$']#,'(Data-QCD) $R_{CS}$ [4,5] jets']
     samps = [('EWK','Rcs_MB'),('EWK','Rcs_SB'),('EWK','Kappa')]#,('data_QCDsubtr','Rcs_SB')]
@@ -237,7 +243,7 @@ if __name__ == "__main__":
 
 
     f =  open('tabelforLimits.tex','w')
-    label = 'SB, MB, and predictions for 0.8 fb$^{-1}$ for $n_{jet}$ 6,8 '
+    label = 'SB, MB, and predictions for 7.7 fb$^{-1}$ for $n_{jet}$ 6,8 '
     samps = [('data','SR_SB'),('data','CR_SB'),('data','Rcs_SB'),
              ('data','CR_MB'),('EWK','Kappa'),('data','SR_MB_predict'),('data','SR_MB')]
 
@@ -246,9 +252,31 @@ if __name__ == "__main__":
 
     printLatexHeader(len(samps), f, 4)
     yds6.printLatexTable(samps, printSamps, label,f) 
-    label = 'SB, MB, and predictions for 0.8 fb$^{-1}$ for njet $\\geq 9$'
+    label = 'SB, MB, and predictions for 7.7 fb$^{-1}$ for njet $\\geq 9$'
     printSamps = ['data 45j, SR','data 45j, CR','data 4j5, Rcs$^{EWK}$',
                   'data 9j, CR','$\\kappa$ MC','data 9j, SRpred','Obs 9j SR']
     yds9.printLatexTable(samps, printSamps, label, f)
+    printLatexFooter(f, 4)
+    f.close()
+
+
+
+    f =  open('tabelforLimitsABCD_QCD.tex','w')
+    label = 'SB, MB, and predictions for 7.7 fb$^{-1}$ for $n_{jet}$ 6,8 '
+    samps = [('data','SR_SB'),('data','CR_SB'),('data_QCDpred','CR_SB'),
+             ('data','CR_MB'),('data_QCDpred','CR_MB'),('EWK','Kappa'),
+             ('data_QCDsubtr','SR_MB_predict'),('data','SR_MB'),
+             ('T1tttt_Scan_mGo1500_mLSP100','SR_MB'),('T1tttt_Scan_mGo1200_mLSP800','SR_MB')]
+
+    printSamps = ['data 45j, SR','data 45j, CR','QCD 45j',
+                  'data 68j, CR','QCD 68j','$\\kappa$ MC','data 68j, SRpred','Obs 68j, SR','1.5/0.1','1.2/0.8']
+
+    printLatexHeader(len(samps), f, 4)
+    yds6.printLatexTable(samps, printSamps, label,f, True) 
+    label = 'SB, MB, and predictions for 7.7 fb$^{-1}$ for njet $\\geq 9$'
+
+    printSamps = ['data 45j, SR','data 45j, CR','QCD 45j',
+                  'data 68j, CR','QCD 9j','$\\kappa$ MC','data 69, SRpred','Obs 9j, SR','1.5/0.1','1.2/0.8']
+    yds9.printLatexTable(samps, printSamps, label, f, True)
     printLatexFooter(f, 4)
     f.close()

@@ -48,13 +48,21 @@ if __name__ == "__main__":
         paths = []
 
         # Add files
-        scalePath  = "Yields/signal/systs/scale/T1tttt/normScale2/allSF_noPU/meth1A/merged/"; paths.append(scalePath)
-        isrPath  = "Yields/signal/systs/ISR/T1tttt/allSF_noPU_v2/meth1A/merged/"; paths.append(isrPath)
-        puPath   = "Yields/signal/systs/pileup/T1tttt/allSF_noPU_fix/meth1A/merged/"; paths.append(puPath)
-        btagPath = "Yields/signal/systs/btag/T1tttt/allSF_noPU_fixLepSF/meth1A/merged/"; paths.append(btagPath)
-        jecPath  = "Yields/signal/systs/JEC/allSF_noSF/merged/"; paths.append(jecPath)
+        #scalePath  = "Yields/signal/systs/scale/T1tttt/normScale2/allSF_noPU/meth1A/merged/"; paths.append(scalePath)
+        #isrPath  = "Yields/signal/systs/ISR/T1tttt/allSF_noPU_v2/meth1A/merged/"; paths.append(isrPath)
+        #puPath   = "Yields/signal/systs/pileup/T1tttt/allSF_noPU_fix/meth1A/merged/"; paths.append(puPath)
+        #btagPath = "Yields/signal/systs/btag/T1tttt/allSF_noPU_fixLepSF/meth1A/merged/"; paths.append(btagPath)
+        #jecPath  = "Yields/signal/systs/JEC/allSF_noSF/merged/"; paths.append(jecPath)
+
+
+#        scalePath  = "Yields/signal/systs/scale/T1tttt/normScale2/allSF_noPU/meth1A/merged/"; paths.append(scalePath)
+        isrPath  = "YieldsJul23/SigSysts/ISR/merged/"; paths.append(isrPath)
+        puPath   = "YieldsJul23/SigSysts/PU/merged/"; paths.append(puPath)
+        btagPath = "YieldsJul23/SigSysts/btag/merged/"; paths.append(btagPath)
+        jecPath  = "YieldsJul23/SigSysts/JEC/merged/"; paths.append(jecPath)
+
         # for central values
-        normPath  = "Yields/signal/fixSR/lumi2p3fb/jPt3TeV/merged/"; paths.append(normPath)
+        normPath  = "YieldsJul19/lumi7p7/scan/merged/"; paths.append(normPath)
 
         for path in paths:
             yds.addFromFiles(path+basename,("lep","sele"))
@@ -73,7 +81,7 @@ if __name__ == "__main__":
     ## Sys types
 #    systs = ["btagHF","btagLF"]
 #    systs = ["PU","btagLF","btagHF","ISR","JEC"]
-    systs = ["Scale-Env","PU","btagLF","btagHF","ISR","JEC"]
+    systs = ["PU","btagHF","ISR","JEC"]
 #    systs = ["btagLF","btagHF","ISR","JEC","PU","Scale-Env"]
 #    systs = ["Scale-Env"]
 #    systs = ["ISR"]
@@ -145,8 +153,8 @@ if __name__ == "__main__":
         ### Add flat systs (lumi, lepSF, triggEff, etc.)
         #flats["stat"] = 0.1
         flats["lepSF"] = 0.05
-        flats["lumi"] = 0.027
-        flats["trig"] = 0.01
+        flats["lumi"] = 0.067
+        flats["trig"] = 0.02
         #flats = {}
 
         for i, syst in enumerate(sorted(flats.keys())):

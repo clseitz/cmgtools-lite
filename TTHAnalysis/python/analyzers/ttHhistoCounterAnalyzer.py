@@ -19,6 +19,7 @@ class ttHhistoCounterAnalyzer( Analyzer ):
     def __init__(self, cfg_ana, cfg_comp, looperName ):
         super(ttHhistoCounterAnalyzer,self).__init__(cfg_ana,cfg_comp,looperName) 
         self.doLHE = getattr(cfg_ana, 'doLHE', True)
+        self.SUSYmodel = cfg_ana.SUSYmodel if hasattr(cfg_ana,'SUSYmodel') else False
         self.cfg_ana = cfg_ana
         self.isInitSMS = False
 
@@ -81,12 +82,13 @@ class ttHhistoCounterAnalyzer( Analyzer ):
         self.readCollections( event.input )
         self.inputCounter.Fill(1)
 
-        isSMS = self.cfg_comp.isMC and True #getattr(event,'susyModel',False)
-        print "!!!!!!!!!!!!!!!!!!!!!!!!",self.cfg_comp.isMC, getattr(event,'susyModel')
-#        event.susyModel = "T1tttt"
+
+#        isSMS = self.cfg_comp.isMC and getattr(event,'susyModel',False)
+        isSMS = self.cfg_comp.isMC and self.SUSYmodel 
+
 
         if isSMS:
-
+            event.susyModel = self.SUSYmodel
             if not self.isInitSMS: self.initSMS(event)
             print event.susyModel,self.susyModel
             if event.susyModel!=self.susyModel: raise RuntimeError, 'The SMS model changed in the middle of the run, from %s to %s!'%(self.susyModel,event.susyModel)

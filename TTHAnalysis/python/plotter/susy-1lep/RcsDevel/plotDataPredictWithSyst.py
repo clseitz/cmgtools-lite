@@ -26,7 +26,7 @@ def scaleToHist(hists, hRef):
 
 if __name__ == "__main__":
 
-    yp.CMS_lumi.lumi_13TeV = str(2.2) + " fb^{-1}"
+    yp.CMS_lumi.lumi_13TeV = str(7.7) + " fb^{-1}"
     yp.CMS_lumi.extraText = "Preliminary"
 
     #yp.CMS_lumi.lumi_13TeV = "MC"
@@ -204,7 +204,7 @@ if __name__ == "__main__":
     #### Drawing
     logY = True
     #logY = False
-    cname = "Data_2p24fb_"+mask
+    cname = "Data_7p7fb_"+mask
     hists = [mcStack,hUncert,hDataPois]
     ratios = [hPredUnc,ratioPois]
 
@@ -223,7 +223,7 @@ if __name__ == "__main__":
     exts = [".pdf",".png",".root"]
     #exts = [".pdf"]
 
-    odir = "BinPlots/Data/JECv7/fixSR_poisErr/allSF_noPU/Method1A/"
+    odir = "BinPlots/Jul19/"
     #odir = "BinPlots/Syst/btag/hadronFlavour/allSF_noPU/Method1B/"
     if not os.path.isdir(odir): os.makedirs(odir)
 

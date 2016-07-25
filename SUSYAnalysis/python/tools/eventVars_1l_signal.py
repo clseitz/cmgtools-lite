@@ -12,13 +12,19 @@ xsecGlu = {} # dict for xsecs
 xsecFile = "../python/tools/glu_xsecs_13TeV.txt"
 
 cntsSusy = {} # dict for signal counts
+C_ISRweightsSusy = {}
 #cntFile = "../python/tools/t1ttt_scan_counts.txt"
 cntFile = "../python/tools/scans/counts_T1tttt_2016.txt"
+<<<<<<< HEAD
+=======
+ISRweightFile = "../python/tools/scans/ISRnormWeights_T1tttt2016.txt"
+>>>>>>> cmg-desy/80X
 
 def loadSUSYparams():
 
     global xsecGlu
     global cntsSusy
+    global C_ISRweightsSusy
 
     print 80*"#"
     print "Loading SUSY parameters"
@@ -50,6 +56,20 @@ def loadSUSYparams():
         print 'Filled %i items to dict' % (len(cntsSusy))
         print "Finished signal parameter load"
 
+    with open(ISRweightFile,"r") as cfile:
+        lines = cfile.readlines()
+        print 'Found %i lines in %s' %(len(lines),ISRweightFile)
+
+        for line in lines:
+            if line[0] == '#': continue
+            else:
+                (mGo,mLSP,C_ISRweight,C_ISRweight_up,C_ISRweight_down) = line.split()
+                #print 'Importet', mGo, mLSP, cnt, 'from', line
+                #cntsSusy[(int(mGo),int(mLSP))] = (int(tot),int(cnt),float(wgt))
+                C_ISRweightsSusy[(int(mGo),int(mLSP))] = (C_ISRweight,C_ISRweight_up,C_ISRweight_down)
+
+        print 'Filled ISR weights %i items to dict' % (len(C_ISRweightsSusy))
+
     return 1
 
 #### LHE Weights #####
@@ -74,7 +94,11 @@ class EventVars1L_signal:
             ### Masses and Xsec
             'mGo','mLSP','susyXsec',
             'susyNgen','totalNgen','susyWgen',
+<<<<<<< HEAD
             'nISR','nISRweight','nISRweightup', 'nISRweightdown','nISRweightsyst_up', 'nISRweightsyst_down',
+=======
+            'nISR','nISRweight','nISRweightsyst_up', 'nISRweightsyst_down',
+>>>>>>> cmg-desy/80X
             ## LHE Scale Weights
             #("nScaleWgt","I"),("ScaleWgt","I",10,"nScaleWgt")
             ("ScaleWgt","F",maxLHEidx,maxLHEidx)
@@ -92,6 +116,7 @@ class EventVars1L_signal:
 
             global xsecGlu
             global cntsSusy
+            global C_ISRweightsSusy 
 
             if len(xsecGlu) == 0: loadSUSYparams()
 
@@ -124,6 +149,7 @@ class EventVars1L_signal:
             nISRforWeights = int(nISR)
             if nISR > 6:
                 nISRforWeights = 6
+<<<<<<< HEAD
             ret['nISR'] = int(nISR)
             ISRweights = { 0: 1.0, 1 : 0.882, 2 : 0.792, 3 : 0.702, 4 : 0.648, 5 : 0.601, 6 : 0.515}
             ISRweightssyst = { 0: 0.0, 1 : 0.059, 2 : 0.104, 3 : 0.149, 4 : 0.176, 5 : 0.199, 6 : 0.242}
@@ -136,6 +162,27 @@ class EventVars1L_signal:
             ret['nISRweightsyst_up'] = nISRweightsyst_up
             ret['nISRweightsyst_down'] = nISRweightsyst_down
 #            print nISR, nISRweight, nISRweightup, nISRweightdown,nISRweightsyst_up, nISRweightsyst_down
+=======
+
+            ret['nISR'] = int(nISR)
+            ISRweights = { 0: 1, 1 : 0.882, 2 : 0.792, 3 : 0.702, 4 : 0.648, 5 : 0.601, 6 : 0.515}
+            ISRweightssyst = { 0: 0.0, 1 : 0.059, 2 : 0.104, 3 : 0.149, 4 : 0.176, 5 : 0.199, 6 : 0.242}
+
+            C_ISR = float(C_ISRweightsSusy[(mGo,mLSP)][0])
+            C_ISR_up = float(C_ISRweightsSusy[(mGo,mLSP)][1])
+            C_ISR_down = float(C_ISRweightsSusy[(mGo,mLSP)][2])
+
+
+
+            nISRweight = C_ISR * ISRweights[nISRforWeights]
+            nISRweightsyst_up =  C_ISR_up * (ISRweights[nISRforWeights]+ISRweightssyst[nISRforWeights])
+            nISRweightsyst_down =  C_ISR_down * (ISRweights[nISRforWeights]-ISRweightssyst[nISRforWeights])
+
+            ret['nISRweight'] = nISRweight
+            ret['nISRweightsyst_up'] = nISRweightsyst_up 
+            ret['nISRweightsyst_down'] = nISRweightsyst_down
+            #print nISR, nISRweight, nISRweightsyst_up, nISRweightsyst_down
+>>>>>>> cmg-desy/80X
             ###Get ISR stuff
 
             ##############

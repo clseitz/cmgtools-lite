@@ -1,8 +1,14 @@
-MET:     MET                                : 40,0,1200;  XTitle="MET [GeV]"
-MET_log:     MET                                : 40,0,1200;  XTitle="MET [GeV]", Logy
-HT:     HT                                : 40,0,3000;  XTitle="H_{T} [GeV]"
-HT_log:     HT                                : 40,0,3000;  XTitle="H_{T} [GeV]", Logy
-LT:     ST  : 40,0,1200;  XTitle="L_{T} [GeV]", Logy
-nJet:       nJets30Clean                            : 20,0,20   ;  XTitle="jet multiplicity"
-nJet_log:       nJets30Clean                            : 20,0,20   ;  XTitle="jet multiplicity", Logy
+
+leppt:     Lep_pt                                : 20,0,600;  XTitle="leptp [GeV]", Logy
+LepPt_barrel: if3(TMath::Abs(Lep_eta)<0.9,Lep_pt,-999) : 20,0,500; XTitle="leppt barrel", IncludeOverflows=True, RMin=0.5, RMax=1.5, Logy
+LepPt_EC: if3(TMath::Abs(Lep_eta)>=0.9,Lep_pt,-999) : 20,0,500; XTitle="leppt EC", IncludeOverflows=True, RMin=0.5, RMax=1.5, Logy
+LepPt_DPhi1_barrel: if3(TMath::Abs(Lep_eta)<0.9&&dPhi>1,Lep_pt,-999) : 20,0,500; XTitle="leppt barrel (dphi\>1)", IncludeOverflows=True, RMin=0.5, RMax=1.5, Logy
+LepPt_DPhi1_EC: if3(TMath::Abs(Lep_eta)>=0.9&&dPhi>1,Lep_pt,-999) : 20,0,500; XTitle="leppt EC (dphi\>1)", IncludeOverflows=True, RMin=0.5, RMax=1.5, Logy
+#MET:     MET                                : 40,0,1200;  XTitle="MET [GeV]"
+#MET_log:     MET                                : 40,0,1200;  XTitle="MET [GeV]", Logy
+#HT:     HT                                : 40,0,3000;  XTitle="H_{T} [GeV]"
+#HT_log:     HT                                : 40,0,3000;  XTitle="H_{T} [GeV]", Logy
+#LT:     ST  : 40,0,1200;  XTitle="L_{T} [GeV]", Logy
+#nJet:       nJets30Clean                            : 20,0,20   ;  XTitle="jet multiplicity"
+#nJet_log:       nJets30Clean                            : 20,0,20   ;  XTitle="jet multiplicity", Logy
 

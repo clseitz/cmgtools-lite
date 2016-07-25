@@ -8,14 +8,20 @@ from math import hypot
 
 ## Trees -- skimmed with trig_base
 
-Tdir = "samples_HT350/"
+#JEC
+#Tdir = "../systs/JEC_ICHEP/samples/"
 # MC
-mcFTdir = "samples_HT350/Friends/"
-sigFTdir = "samples_HT350/Friends/"
+#mcFTdir = "../systs/JEC_ICHEP/samples/Friends/"
+#sigFTdir = "../systs/JEC_ICHEP/samples/Friends/"
+
+
+Tdir = "samples_Jul15/"
+# MC
+mcFTdir = "samples_Jul15/Friends_ICHEP/"
+sigFTdir = "samples_Jul15/Friends_ICHEP/"
 
 # new data
-dataFTdir = "samples_HT350/Friends/"
-
+dataFTdir = "samples_Jul15/Friends_ICHEP/"
 
 #Dilepton stuff
 #mcFTdir = "/nfs/dust/cms/user/kirschen/newSUSYStuff/CMSSW_7_4_12_patch4/src/CMGTools/SUSYAnalysis/macros/FreshFriends_V2"
@@ -452,12 +458,12 @@ if __name__ == "__main__":
         if doDLCR: cDict.update(cutDictDLCRf9)
 
 
-    doNjet5 = True
+    doNjet5 = False
     if doNjet5:
         cDict.update(cutDictSRf5)
         cDict.update(cutDictCRf5)
 
-    doFew = True
+    doFew = False
     if doFew:
         cDict.update(cutDictSRf68Few)
         cDict.update(cutDictCRf68Few)

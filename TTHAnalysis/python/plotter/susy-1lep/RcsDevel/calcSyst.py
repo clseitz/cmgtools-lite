@@ -100,7 +100,8 @@ def getSystHist(tfile, hname, syst = "Xsec"):
         hNorm = tfile.Get(hname)
         hUp = tfile.Get(upName)
         hDown = tfile.Get(dnName)
-    
+        
+        print hname, upName, dnName
         if not hUp and hDown:
             # Replace missing Up with Down
             hUp = hDown
@@ -164,7 +165,7 @@ def makeSystHists(fileList):
     #hnames = ["T1tttt_Scan"] # process name
     #hnames = ["EWK"] # process name
     #hnames = ["EWK","TTJets","WJets","SingleTop","DY","TTV"] # process name
-    hnames = ["EWK","TTJets","WJets","SingleT","DY","TTV"] # process name
+    hnames = ["EWK","TTJets","WJets","DY","TTV"] # process name
     #hnames = ['T_tWch','TToLeptons_tch','TBar_tWch', 'EWK', 'TToLeptons_sch'] # process name
     #hnames = ["TTJets","WJets","SingleTop","DY","TTV"] # process name
     #hnames = getHnames(fileList[0],'SR_MB') # get process names from file
@@ -174,17 +175,17 @@ def makeSystHists(fileList):
     #systNames = ["PU"]
     #systNames = ["topPt"]
     #systNames = ["Wxsec"]
-    systNames = ["ScaleMatchVar-Env"]
+    #systNames = ["ScaleMatchVar-Env"]
     #systNames = ["PDFUnc-RMS"]
     #systNames = ["Wxsec"]
     #systNames = ["TTVxsec"]
-    systNames = ["lepSF"]
+    #systNames = ["lepSF"]
     #systNames = ["JEC"]
-    systNames = ["DLSlope"]
+    #systNames = ["DLSlope"]
     #systNames = ["DLConst"]
     #systNames = ["JER"]
     #systNames = ["Wpol"]
-    #systNames = ["btagHF","btagLF"]
+    systNames = ["btagHF","btagLF"]
     #systNames = ["ISR"]
 
     #bindirs =  ['SR_MB','CR_MB','SR_SB','CR_SB']

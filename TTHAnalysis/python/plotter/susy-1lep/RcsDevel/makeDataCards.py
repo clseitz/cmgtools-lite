@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python
 import sys
 import numpy as np
@@ -78,9 +77,11 @@ def readSystFile():
     return systDict
 
 def printABCDCard(yds, ydsObs, ydsKappa, ydsSigSys):
+    print "HELLLO"
     systDict = readSystFile()
     folder = 'datacardsABCD_' + out + '/'
     if not os.path.exists(folder): os.makedirs(folder) 
+    print "created", folder
     bins = sorted(yds.keys())
     
     catNames = [x.cat for x in yds[bins[0]] ]
@@ -146,7 +147,7 @@ def printABCDCard(yds, ydsObs, ydsKappa, ydsSigSys):
         before = '       -  ' * (4)
         after = '       -  ' * (3)
         #hard code for now some values for signal sists
-        doSigSyst = True
+        doSigSyst = False
 #        Trigger	1	 	 
 #        PU	5	 	 
 #        Lepton efficiency	5	 	 
@@ -284,10 +285,12 @@ if __name__ == "__main__":
     yds9 = YieldStore("lepYields")
 #    pattern = "YieldsMarch8/unblind/lumi2p3fb/allSF_noPU/*/merged/LT*NJ68.*"
 #    pattern = "YieldsMay2/phd/lumi30fb/*/merged/LT*NJ68.*"
-    pattern = "testHenning2/*/merged/LT*NJ68.*"
+    pattern = "YieldsJul19/lumi7p7/*/merged/LT*NJ68.*"
+#    pattern = "YieldsJune29/lumi3p99/*/merged/LT*NJ68.*"
     yds6.addFromFiles(pattern,("lep","sele")) 
-    pattern = "YieldsMay2/phd/lumi30fb/*/merged/LT*NJ9i.*"
-    pattern = "testHenning2/*/merged/LT*NJ9i.*"
+#    pattern = "YieldsMay2/lumi3p99/*/merged/LT*NJ9i.*"
+    pattern ="YieldsJul19/lumi7p7/*/merged/LT*NJ9i.*"
+#    pattern ="YieldsJune29/lumi3p99/*/merged/LT*NJ9i.*"
 #    pattern = "YieldsMarch8/unblind/lumi2p3fb/allSF_noPU/*/merged/LT*NJ9i.*"
 
     yds9.addFromFiles(pattern,("lep","sele"))
@@ -298,9 +301,10 @@ if __name__ == "__main__":
 
      
     
-
-#    yds6.showStats()
-#    yds9.showStats()
+    print yds9
+    #yds9.printTable()
+    yds6.showStats()
+    yds9.showStats()
     #pattern = 'arturstuff/grid/merged/LT\*NJ6\*'
     ####SELECT DATA OR MC###
     useMC = False
@@ -309,10 +313,10 @@ if __name__ == "__main__":
         prefix = 'background'
     readSystFile()
     for mGo in range(600, 2000, 25):
-       for mLSP in range(0,1200,25):
+       for mLSP in range(0,1500,25):
 
-#    for mGo in range(1400, 1550, 50):
-#        for mLSP in range(50,150,50):
+#    for mGo in range(1500, 1550, 50):
+#        for mLSP in range(100,120,50):
             for ydIn in (yds6, yds9):
                 print "making datacards for "+str(mGo)+ ' '+str(mLSP)
                 signal = SMS+'_Scan_mGo'+str(mGo)+'_mLSP'+str(mLSP)
@@ -322,7 +326,9 @@ if __name__ == "__main__":
                 sampsBkg = [('TTsemiLep',cat),('TTdiLep',cat),('TTV',cat), ('SingleT',cat), ('WJets',cat), ('DY',cat), ('QCD',cat),]
                 sampsSig = [(signal ,cat),]
                 samps = sampsBkg + sampsSig
+                print sampsSig
                 ydsSig = ydIn.getMixDict(sampsSig)
+                print ydsSig.values()
                 if type(ydsSig.values()[0][0]) == int:
                     print "signal not available will skip"
                     continue
@@ -348,7 +354,7 @@ if __name__ == "__main__":
                                    (SMS+'_Scan_Scale-Env_syst_mGo'+str(mGo)+'_mLSP'+str(mLSP), 'SR_MB'),
                                   ]
 #                sampsABCDSigSys = [(name, cat) for name in ydsSys.samples if ("syst" in name and "mGo"+str(mGo)+"_mLSP"+str(mLSP) == name[name.find('syst_')+5:-1])]
-                print sampsABCDSigSys
+                #print sampsABCDSigSys
                 sampsABCD = sampsABCDbkg + sampsABCDsig
                 
                 ydsABCD = ydIn.getMixDict(sampsABCD)
