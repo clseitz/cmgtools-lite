@@ -35,6 +35,7 @@ class susyParameterScanAnalyzer( Analyzer ):
                                                      'std::vector<reco::GenParticle>' )
         if self.cfg_ana.doLHE:
             self.mchandles['lhe'] = AutoHandle( 'source', 'LHEEventProduct', mayFail = True, lazy = False )
+            self.mchandles['genheader'] = AutoHandle( 'source', 'GenLumiInfoHeader', mayFail = True, lazy = False )
         
     def beginLoop(self, setup):
         super(susyParameterScanAnalyzer,self).beginLoop(setup)
@@ -58,6 +59,8 @@ class susyParameterScanAnalyzer( Analyzer ):
             setattr(event, "genSusyM"+p, avgmass)
 
     def readLHE(self,event):
+        if not self.mchandles['genheader'].isValid():
+            print "gen header not found"
         if not self.mchandles['lhe'].isValid():
             if not hasattr(self,"warned_already"):
                 print "ERROR: Missing LHE header in file"
