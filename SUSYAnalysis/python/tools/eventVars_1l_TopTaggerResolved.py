@@ -40,21 +40,24 @@ class EventVars1LTopTaggerResolved:
         jet_collection = [j for j in Collection(event,"Jet","nJet")]
 
         jets  = ROOT.std.vector(ROOT.TLorentzVector)()
-        btaginfo = ROOT.std.vector( float ) ()
+#        jets  = vector(TLorentzVector)()
+        btaginfo = ROOT.std.vector('double') ()
         for jet in jet_collection:
             jets.push_back(get4Vec(jet))
             btaginfo.push_back(jet.btagCSV)
 
         print btaginfo[0]
-#        ROOT.std.vector<ROOT.Constituent> constituents = ROOT.packageCandidates(jets, btaginfo);
+        print type(btaginfo), type(jets)
 
         constituents = ROOT.std.vector(ROOT.Constituent)( )
-
         constituents = ttUtility.packageConstituents(jets, btaginfo)
 
+        self.tt.runTagger(constituents)
         
-        
-        print self.tt
+        ttr = TopTaggerResults(self.tt.getResults())
+
+        for top in ttr.getTops():
+            print top.p().Pt()
 
 
         return ret
