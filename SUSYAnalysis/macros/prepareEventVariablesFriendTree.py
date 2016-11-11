@@ -34,6 +34,9 @@ MODULES.append( ('1l_SysWeights', EventVars1LWeightsForSystematics()) )
 from CMGTools.SUSYAnalysis.tools.eventVars_1l_bkgDilep import EventVars1L_bkgDilep
 MODULES.append( ('1l_bkgDilep', EventVars1L_bkgDilep()) )
 
+from CMGTools.SUSYAnalysis.tools.eventVars_1l_TopTaggerResolved import EventVars1LTopTaggerResolved
+MODULES.append( ('1l_TopTaggerResolved', EventVars1LTopTaggerResolved()) )
+
 '''
 from CMGTools.SUSYAnalysis.tools.eventVars_1l_top import EventVars1L_Top
 MODULES.append( ('1l_TopVars', EventVars1L_Top()) )
